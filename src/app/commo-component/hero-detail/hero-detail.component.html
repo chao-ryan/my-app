@@ -1,0 +1,9 @@
+<div *ngIf="showFlg">
+    <h2>{{hero.name | uppercase}} Details</h2>
+    <div class="content-area"><span>id: {{hero.id}}</span></div>
+    <div class="content-area">
+      <label>name:
+        <input type="text" [(ngModel)]="hero.name" placeholder="please input your name">
+      </label>
+    </div>
+  </div>

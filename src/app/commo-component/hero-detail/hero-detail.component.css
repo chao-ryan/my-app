@@ -1,0 +1,14 @@
+/* HeroDetailComponent's private CSS styles */
+h2{
+  font-size: 42px;
+  color: tomato;
+}
+.content-area{
+  color: darkcyan;
+  font-size: 22px;
+}
+.content-area input{
+  font-size: 24px;
+  color: tomato;
+  border-style: none;
+}

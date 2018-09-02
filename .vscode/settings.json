@@ -62,30 +62,18 @@
       "emmet.includeLanguages": {
           "jsx-sublime-babel-tags":"javascriptreact"
       },
-      // 是否开启eslint检测
-      "eslint.enable":false,
       // 文件保存时，是否自动根据eslint进行格式化
-      "eslint.autoFixOnSave":true,
+    "eslint.autoFixOnSave": true,
       // eslint配置文件
-      "eslint.options":{
-          "plugins":[
-              "html",
-              "javascript",{
-                  "language":"vue",
-                  "autoFix":true
-              },
-              "vue"
-          ]
-      },
+    "eslint.options": {"configFile": "F:/Download/myGitHub/my-app/.eslintrc.json"},
       // eslint能够识别的文件后缀类型
       "eslint.validate":[
           "javascript",
           "javascriptreact",
-          "html",
+          {"language": "html","autoFix": true,},
           {"language": "vue", "autoFix": true},
-          "vue",
-          "typescript",
-          "typescriptreact"
       ],
-      "tslint.alwaysShowRuleFailuresAsWarnings": true,
+    "tslint.alwaysShowStatus": true,
+    "tslint.configFile": "F:/Download/myGitHub/my-app/src/tslint.json",
+    "git.detectSubmodulesLimit": 40,
 }
