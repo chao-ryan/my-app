@@ -1,5 +1,6 @@
-import { Component, OnInit } from "../../../../node_modules/@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MessagesService } from "../../service/messages-service";
+
 
 @Component({
   selector: "app-messages",
@@ -7,6 +8,8 @@ import { MessagesService } from "../../service/messages-service";
   styleUrls: ["./messages.component.css"]
 })
 export class MessagesComponent implements OnInit {
+  // messages表示非表示flg
+  messageShowFlg: boolean;
   /**
    * 构造器
    */

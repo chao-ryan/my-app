@@ -3,17 +3,16 @@ import { HeroIntf } from "../../interface";
 import { HeroService } from "../../service/hero.service";
 
 @Component({
-  selector: "app-heros",
-  templateUrl: "./heros.component.html",
-  styleUrls: ["./heros.component.css"]
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"]
 })
-export class HerosComponent implements OnInit{
-  // 英雄list
-  heroes: HeroIntf[];
+export class DashboardComponent implements OnInit {
+  // 英雄列表
+  heroes: HeroIntf[] = [];
 
   /**
    * 构造器
-   * @param heroService 英雄服务service
    */
   constructor(private heroService: HeroService) {}
 
@@ -30,14 +29,7 @@ export class HerosComponent implements OnInit{
    */
   private doInit() {
     // 获取英雄列表
-    this.getHero();
-  }
-
-  /**
-   * 获取英雄信息
-   */
-  private getHero() {
-    // 获取英雄信息
-    this.heroService.getHeroList().subscribe(heroList => this.heroes = heroList);
+    this.heroService.getHeroList()
+    .subscribe(heroList => this.heroes = heroList.slice(1, 5));
   }
 }

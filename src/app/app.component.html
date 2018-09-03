@@ -4,7 +4,9 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-<div>
-  <app-heros></app-heros>
+<nav>
+  <a routerLink="/dashboard">Dashboard</a>
+  <a routerLink="/heroes">Heroes</a>
+</nav>
+  <router-outlet></router-outlet>
   <app-messages></app-messages>
-</div>
