@@ -1,1 +1,1 @@
-export { HeroDto } from "./hero-dto/hero.dto";
+export * from "./hero-dto/hero.dto";
