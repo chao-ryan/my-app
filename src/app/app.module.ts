@@ -9,6 +9,7 @@ import {
   DashboardComponent
 } from './commo-component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     DashboardComponent
   ],
   imports: [
-    BrowserModule, FormsModule, AppRoutingModule
+    BrowserModule, FormsModule, AppRoutingModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
