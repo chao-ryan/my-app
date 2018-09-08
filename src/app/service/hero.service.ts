@@ -5,7 +5,7 @@ import { Observable, of } from "rxjs";
 import { MessagesService } from "./messages-service";
 import { HttpClient } from "@angular/common/http";
 // 导入错误处理操作符
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { ErrorHandleService } from "./error-handle.service";
 // 导入定数定义
 import * as ConstDef from "../const-def/hero-service-const-def";
@@ -46,69 +46,116 @@ export class HeroService {
   }
 
   /**
-   * message打印
-   * @param message 打印信息
+   * GET  当英雄id不存在时的处理
+   * @param id 英雄id
+   * @return 返回undefined
    */
-  private log(message: string) {
-    this.messagesService.addMessage(`HeroService: ${message}`);
+  getHeroNo404<K>(id: number): Observable<HeroIntf> {
+    const url = `${this.heroesUrl}/?id=${id}`;
+    const option = `getHero id=${id}`;
+    const result: HeroIntf = {
+      id: undefined,
+      name: undefined
+    };
+    return this.httpClient.get<HeroIntf[]>(url).pipe(
+      map(heroes => heroes[0]),
+      catchError(this.errorHandleService.handleError<HeroIntf>(option, result, this))
+    )
   }
 
   /**
-   * 从http获取英雄数据
+   * GET 从http获取英雄数据
    * @return 返回英雄列表
    */
   getHeroesWithHttp (): Observable<HeroIntf[]> {
     return this.httpClient
       .get<HeroIntf[]>(this.heroesUrl)
       .pipe(  // catchError会拦截失败的Observable
-        catchError(this.errorHandleService.handleError("getHeroesWithHttp", []))
+        catchError(this.errorHandleService.handleError("getHeroesWithHttp", [], this))
       );
   }
 
   /**
-   * 从http获取单个英雄数据
+   * GET 从http获取单个英雄数据
    * @param id 指定英雄id
    * @return 返回单个英雄对象
    */
   getHeroByIdWithHttp(id: number): Observable<HeroIntf> {
     const url = `${this.heroesUrl}/${id}`;
+    const result: HeroIntf = {
+      id: undefined,
+      name: undefined
+    };
+    const option = `getHeroByIdWithHttp id=${id}`;
     return this.httpClient.get<HeroIntf>(url).pipe(
-      catchError(this.errorHandleService.handleError<HeroIntf>(`getHeroByIdWithHttp id=${id}`))
+      catchError(this.errorHandleService.handleError<HeroIntf>(option, result, this))
     );
   }
 
   /**
-   * 修改数据
+   * PUT 修改数据
    * @param hero 要修改的数据
    * @return 返回处理结果
    */
   update(hero: HeroIntf): Observable<any> {
+    const result: any = undefined;
     return this.httpClient.put(this.heroesUrl, hero, ConstDef.HERO_HTTP_OPTIONS).pipe(
-      catchError(this.errorHandleService.handleError<any>("update"))
+      catchError(this.errorHandleService.handleError<any>("update", result, this))
     );
   }
 
   /**
-   * 保存数据
+   * POST 保存数据
    * @param hero 要保存的英雄数据
    * @return 返回保存后的当前英雄对象
    */
   save(hero: HeroIntf): Observable<HeroIntf> {
+    const result: HeroIntf = {
+      id: undefined,
+      name: undefined
+    };
     return this.httpClient.post<HeroIntf>(this.heroesUrl, hero, ConstDef.HERO_HTTP_OPTIONS).pipe(
-      catchError(this.errorHandleService.handleError<HeroIntf>("save"))
+      catchError(this.errorHandleService.handleError<HeroIntf>("save", result, this))
     );
   }
 
   /**
-   * 删除数据
+   * DELETE 删除数据
    * @param hero 要删除的英雄对象或id
    * @return 返回删除的英雄观察对象
    */
   delete(hero: HeroIntf | number): Observable<HeroIntf> {
     const id = typeof hero === "number" ? hero: hero.id;
     const url = `${this.heroesUrl}/${id}`;
+    const result: HeroIntf = {
+      id: undefined,
+      name: undefined
+    };
     return this.httpClient.delete<HeroIntf>(url, ConstDef.HERO_HTTP_OPTIONS).pipe(
-      catchError(this.errorHandleService.handleError<HeroIntf>("delete"))
+      catchError(this.errorHandleService.handleError<HeroIntf>("delete", result, this))
     );
+  }
+
+  /**
+   * GET 根据关键词过滤英雄数据
+   * @param searchInput 搜索关键词
+   * @return 返回英雄数组
+   */
+  search(searchInput: string): Observable<HeroIntf[]> {
+    if (!searchInput.trim()) {
+      // 如果没有搜索关键词，返回空数组
+      return of([]);
+    }
+    return this.httpClient.get<HeroIntf[]>(`${this.heroesUrl}/?name=${searchInput}`).pipe(
+      catchError(this.errorHandleService.handleError<HeroIntf[]>(`search`, [], this))
+    );
+  }
+
+  /**
+   * LOG message打印
+   * @param message 打印信息
+   */
+  private log(message: string) {
+    this.messagesService.addMessage(`HeroService: ${message}`);
   }
 }

@@ -6,7 +6,8 @@ import {
   HerosComponent,
   HeroDetailComponent,
   MessagesComponent,
-  DashboardComponent
+  DashboardComponent,
+  SearchComponent
 } from './commo-component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from "@angular/common/http";
@@ -17,10 +18,14 @@ import { HttpClientModule } from "@angular/common/http";
     HerosComponent,
     HeroDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    SearchComponent
   ],
   imports: [
-    BrowserModule, FormsModule, AppRoutingModule, HttpClientModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
